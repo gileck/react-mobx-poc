@@ -20,7 +20,7 @@ function platform() {
       SET_DATA: function ({compId, data}) {
         const component = components.find(comp => compId === comp.compId)
         Object.assign(component.data, data)
-        // if (isRendered) renderAllComponents()
+          if (window.updateComp[compId]) window.updateComp[compId]()
       },
       SET_EVENT_HANDLER: function ({compId, callbackId}) {
       const component = components.find(comp => compId === comp.compId)
