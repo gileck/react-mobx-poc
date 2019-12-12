@@ -46,7 +46,7 @@ async function startViewer() {
   await platform()
   performance.mark('platform-end')
   performance.mark('render-start')
-  components = observable(components)
+  // components = observable(components)
   renderAllComponents()
   isRendered = true
 }
