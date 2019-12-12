@@ -20,7 +20,7 @@ function platform() {
       SET_DATA: function ({compId, data}) {
         const component = components.find(comp => compId === comp.compId)
         Object.assign(component.data, data)
-        if (isRendered) renderAllComponents()
+        // if (isRendered) renderAllComponents()
       },
       SET_EVENT_HANDLER: function ({compId, callbackId}) {
       const component = components.find(comp => compId === comp.compId)
@@ -46,7 +46,7 @@ async function startViewer() {
   await platform()
   performance.mark('platform-end')
   performance.mark('render-start')
-  // components = observable(components)
+  components = observable(components)
   renderAllComponents()
   isRendered = true
 }

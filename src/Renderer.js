@@ -12,17 +12,17 @@ const Button = props => {
 }
 const Image = props => <img style={{width: props.layout.width, height:props.layout.height}} src={props.data.src}/>
 
-const viewerComponents = {
-  Text,
-  Button,
-  Image
-}
-
 // const viewerComponents = {
-//   Text: observer(Text),
-//   Button: observer(Button),
-//   Image: observer(Image)
+//   Text,
+//   Button,
+//   Image
 // }
+
+const viewerComponents = {
+  Text: observer(Text),
+  Button: observer(Button),
+  Image: observer(Image)
+}
 
 window.updateComp = {}
 function Wrapper({Comp, props, compId}) {
