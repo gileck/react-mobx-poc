@@ -23,6 +23,7 @@ class Button {
     })
   }
   set label(label) {
+    this.comp.data.label = label
     setData({label}, this.comp.compId)
   }
   get label() {
@@ -35,6 +36,7 @@ class Text {
     this.comp = comp
   }
   set text(text) {
+    this.comp.data.text = text
     setData({text}, this.comp.compId)
   }
   get text() {
@@ -47,6 +49,7 @@ class Image {
     this.comp = comp
   }
   set src(src) {
+    this.comp.data.src = src
     setData({src}, this.comp.compId)
   }
   get src() {
