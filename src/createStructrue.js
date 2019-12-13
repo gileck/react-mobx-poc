@@ -1,6 +1,6 @@
 import _ from 'lodash'
-const MAX_X = 50000
-const MAX_Y = 50000
+const MAX_X = 10000
+const MAX_Y = 10000
 function random(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
