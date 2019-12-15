@@ -1,18 +1,22 @@
 window.isMobx = location.search.includes("mobx")
 window.isNaive = location.search === ""
 window.isUpdateProps = location.search.includes("updateProps")
+window.carmi = location.search.includes("carmi")
 
 import ReactDOM from 'react-dom'
 import React from 'react'
-import Renderer from './Renderer'
+import Renderer,{ViewerComponents} from './Renderer'
 import createStructrue from "./createStructrue";
+import factory from './model'
 import {observable, toJS} from 'mobx'
+import {Provider, carmiReactFnLib} from 'carmi-react'
 
 let components
 let isRendered = false
+let carmiInstance
 
 window.updateProps = {}
-const renderAllComponents = () => ReactDOM.render(<Renderer components={components}/>, document.getElementById('root'))
+// const renderAllComponents = () =>
 function platform() {
   return new Promise(async resolve => {
     const wixCode = await fetch('/wixCode').then(res => res.text())
@@ -55,9 +59,17 @@ async function startViewer() {
   // console.log({components})
   if (window.isMobx) {
     performance.mark('observable-start')
-    components = observable(components)
+    components = components
+    globals = observable({
+      isLoggedIn: false
+    })
     performance.mark('observable-end')
     performance.measure('observable', 'observable-start', 'observable-end')
+  }
+
+  if (window.carmi) {
+    carmiInstance = factory(components, carmiReactFnLib);
+    window.carmiInstance = carmiInstance
   }
 
 
@@ -65,7 +77,15 @@ async function startViewer() {
   window.components = components
 
   performance.mark('render-start')
-  renderAllComponents()
+  if (carmi) {
+    ReactDOM.render(React.createElement(Provider, {
+      value: carmiInstance,
+      compsLib: {Renderer,...ViewerComponents },
+    }, () => carmiInstance.renderer), document.getElementById('root'))
+  } else {
+    ReactDOM.render(<Renderer globals={globals} components={components}/>, document.getElementById('root'))
+  }
+  // renderAllComponents()
   isRendered = true
 }
 

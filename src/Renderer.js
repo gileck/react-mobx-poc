@@ -12,6 +12,7 @@ function useForceUpdate() {
 
 const Text = props => {
   // console.log("rendering: " + props.compId);
+
   return <div id={props.compId}>{props.data.text}</div>
 }
 const Button = props => {
@@ -48,6 +49,8 @@ function Wrapper({Comp, props, compId}) {
   return <Comp {...props} />
 }
 
+export const ViewerComponents = viewerComponents
+
 export default ({components}) => {
   React.useEffect(() => {
     performance.mark('render-end')
@@ -63,6 +66,9 @@ export default ({components}) => {
   //   console.log('re-render', performance.getEntriesByName('render')[0].duration);
   // })
 
+  if (window.carmi) {
+    return <div>{components}</div>
+  }
 
   return (<div>
     {
@@ -76,7 +82,7 @@ export default ({components}) => {
                        left: comp.layout.x
                      }}>
           {/*{ window.isUpdateProps ? <Wrapper Comp={Comp} compId={comp.compId} props={comp}/> : <Comp {...comp}/> }*/}
-          <Wrapper Comp={Comp} compId={comp.compId} props={comp}/>
+          <Wrapper Comp={Comp} compId={comp.compId} props={Object.assign(comp, globals)}/>
         </div>)
       })
     }
